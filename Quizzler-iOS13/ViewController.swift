@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // Update the label text when the app is loaded
-        questionLabel.text = quiz[questionInd].title
+        updateUI()
         
     }
 
@@ -49,22 +49,33 @@ class ViewController: UIViewController {
         let actualAnswer = quiz[questionInd].answer
         
         if userAnswer == actualAnswer {
-            print("Correct!")
+            sender.backgroundColor = UIColor.green
         }
         else {
-            print("Wrong!")
+            sender.backgroundColor = UIColor.red
         }
+        
+        
         
         // If the user has reached the end of the quiz
         if questionInd == quiz.count - 1 {
-            questionLabel.text = "You are done!"
+//            questionLabel.text = "You are done!"
+            print("Done!")
         }
         // Otherwise move to the next question
         else {
             questionInd += 1
-            questionLabel.text = quiz[questionInd].title
         }
         
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
+        
+    }
+    
+    @objc func updateUI() {
+        questionLabel.text = quiz[questionInd].title
+        trueButton.backgroundColor = UIColor.clear
+        falseButton.backgroundColor = UIColor.clear
+        progressBar.progress = Float(questionInd + 1) / Float(quiz.count)
     }
     
 }
