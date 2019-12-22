@@ -11,6 +11,11 @@ import UIKit
 struct Question {
     var title: String
     var answer: String
+    
+    init(title: String, answer: String) {
+        self.title = title
+        self.answer = answer
+    }
 }
 
 class ViewController: UIViewController {
