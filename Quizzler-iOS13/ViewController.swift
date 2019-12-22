@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct Question {
+    var title: String
+    var answer: String
+}
+
 class ViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
@@ -15,9 +20,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var falseButton: UIButton!
     
     let quiz = [
-        ["Four + Two is equal to Six.", "True"],
-        ["Five - Three is greater than One.", "True"],
-        ["Three + Eight is less than Ten.", "False"]
+        Question(title: "Four + Two is equal to Six.", answer: "True"),
+        Question(title: "Five - Three is greater than One.", answer: "True"),
+        Question(title: "Three + Eight is less than Ten.", answer: "False")
     ]
     
     // Initialize index
@@ -28,7 +33,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // Update the label text when the app is loaded
-        questionLabel.text = quiz[questionInd][0]
+        questionLabel.text = quiz[questionInd].title
         
     }
 
@@ -36,7 +41,7 @@ class ViewController: UIViewController {
         
         // Check if the user's answer is correct
         let userAnswer = sender.currentTitle // True or False
-        let actualAnswer = quiz[questionInd][1]
+        let actualAnswer = quiz[questionInd].answer
         
         if userAnswer == actualAnswer {
             print("Correct!")
@@ -52,7 +57,7 @@ class ViewController: UIViewController {
         // Otherwise move to the next question
         else {
             questionInd += 1
-            questionLabel.text = quiz[questionInd][0]
+            questionLabel.text = quiz[questionInd].title
         }
         
     }
