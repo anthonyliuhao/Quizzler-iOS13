@@ -13,6 +13,9 @@ struct QuizBrain {
     // Question index
     var questionInd: Int
     
+    // Keep score
+    var score: Int
+    
     let quiz = [
         Question(q: "A slug's blood is green.", a: "True"),
         Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
@@ -31,11 +34,14 @@ struct QuizBrain {
     init() {
         // Initialize question Index to be 0
         self.questionInd = 0
+        
+        self.score = 0
     }
     
-    func checkAnswer(_ userAnswer: String) -> Bool{
+    mutating func checkAnswer(_ userAnswer: String) -> Bool{
         if userAnswer == quiz[questionInd].answer {
             // User is right
+            self.score += 1
             return true
         }
         else {
@@ -52,6 +58,11 @@ struct QuizBrain {
         return Float(questionInd + 1) / Float(quiz.count)
     }
     
+    func getScore() -> Int {
+        return self.score
+    }
+    
+    // Use the mutating keyword to explicitly mutate a member variable
     mutating func advanceQuestion() {
         
         // If the index is within bounds, increment it by 1
@@ -62,6 +73,9 @@ struct QuizBrain {
         // If the index reaches the max index, reset to zero
         else {
             self.questionInd = 0
+            self.score = 0
         }
     }
+    
+    
 }
