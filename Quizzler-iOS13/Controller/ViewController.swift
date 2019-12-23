@@ -30,35 +30,31 @@ class ViewController: UIViewController {
         
         // Check if the user's answer is correct
         let userAnswer = sender.currentTitle! // True or False
+        let answerIsCorrect : Bool = quizBrain.checkAnswer(userAnswer)
         
-        if quizBrain.checkAnswer(userAnswer) {
+        // Provide feedback: correct - green; wrong - red
+        if answerIsCorrect {
             sender.backgroundColor = UIColor.green
         }
         else {
             sender.backgroundColor = UIColor.red
         }
         
+        // Move to the next question
+        quizBrain.advanceQuestion()
         
-        
-        // If the user has reached the end of the quiz
-        if questionInd == quiz.count - 1 {
-//            questionLabel.text = "You are done!"
-            print("Done!")
-        }
-        // Otherwise move to the next question
-        else {
-            questionInd += 1
-        }
-        
+        // Wait 0.2 seconds and then update the UI
         Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
         
     }
-    
+
     @objc func updateUI() {
-        questionLabel.text = quiz[questionInd].title
+        questionLabel.text = quizBrain.getQuestionTitle()
+        progressBar.progress = quizBrain.getProgress()
+        
         trueButton.backgroundColor = UIColor.clear
         falseButton.backgroundColor = UIColor.clear
-        progressBar.progress = Float(questionInd + 1) / Float(quiz.count)
+        
     }
     
 }

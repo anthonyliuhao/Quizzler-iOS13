@@ -9,6 +9,10 @@
 import Foundation
 
 struct QuizBrain {
+    
+    // Question index
+    var questionInd: Int
+    
     let quiz = [
         Question(q: "A slug's blood is green.", a: "True"),
         Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
@@ -24,8 +28,10 @@ struct QuizBrain {
         Question(q: "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.", a: "True")
     ]
     
-    // Initialize index
-    var questionInd = 0
+    init() {
+        // Initialize question Index to be 0
+        self.questionInd = 0
+    }
     
     func checkAnswer(_ userAnswer: String) -> Bool{
         if userAnswer == quiz[questionInd].answer {
@@ -35,6 +41,27 @@ struct QuizBrain {
         else {
             // User got it wrong
             return false
+        }
+    }
+    
+    func getQuestionTitle() -> String {
+        return quiz[questionInd].title
+    }
+    
+    func getProgress() -> Float {
+        return Float(questionInd + 1) / Float(quiz.count)
+    }
+    
+    mutating func advanceQuestion() {
+        
+        // If the index is within bounds, increment it by 1
+        if questionInd < quiz.count - 1 {
+            self.questionInd += 1
+        }
+        
+        // If the index reaches the max index, reset to zero
+        else {
+            self.questionInd = 0
         }
     }
 }
